@@ -17,7 +17,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Initialize Session State
+# Initialize Session State for Page Navigation & Memory
 if "current_page" not in st.session_state:
     st.session_state.current_page = "page1"
 if "chat_history" not in st.session_state:
@@ -63,13 +63,13 @@ lang_dict = {
     }
 }
 
-# Auto Language Logic Simulator
+# Auto Language Logic Simulator (Simulating Japan region detection)
 if st.session_state.auto_lang:
-    st.session_state.app_lang = "日本語" # Defaults to Japanese if auto is ticked (simulating Japan region detection)
+    st.session_state.app_lang = "日本語"
 
 L = lang_dict[st.session_state.app_lang]
 
-# If Minimize Mode is activated, present a compact overlay UI
+# 🗖 --- MINIMIZE MODE UI OVERLAY ---
 if st.session_state.minimize_mode:
     st.warning("🗖 Mini Mode Active (ဆော့ဝဲလ်ကို ပုံသေးထားသည်)")
     if st.button("🗖 Maximize App (ပုံပြန်ချဲ့ရန်)"):
@@ -84,11 +84,11 @@ if st.session_state.current_page == "page1":
     st.title(L["title"])
     st.write("---")
     
-    # ROW 1: Top 3 Blocks
+    # ROW 1: Top 3 Blocks (Game, Account Log, Field Study)
     r1_col1, r1_col2, r1_col3 = st.columns(3)
     with r1_col1:
         st.markdown(f"<div class='box-style'><h3>{L['game']}</h3></div>", unsafe_allow_html=True)
-        selected_game = st.selectbox("Select Game:", ["Art of War 3", "Wuthering Waves"], label_visibility="collapsed")
+        selected_game = st.selectbox("Select Game:", ["Wuthering Waves", "Art of War 3"], label_visibility="collapsed")
         st.caption(f"Active: {selected_game}")
         
     with r1_col2:
@@ -187,20 +187,25 @@ elif st.session_state.current_page == "page2":
             if st.button("Send", key="p2_send"):
                 if user_msg:
                     st.session_state.chat_history.append({"user": "You", "text": user_msg})
-                    ai_responses = ["ဗျူဟာမြောက် လမ်းကြောင်း ဖွင့်ပေးထားပါတယ် ဆရာကြီး။", "ရန်သူ့တိုက်စစ်ကို ကောင်တာပြန်ချဖို့ Heavy Assault ပြင်ဆင်ပါ။", "ဂိမ်းမှတ်တမ်းကို စနစ်ထဲမှာ ဗီဒီယို ဖမ်းယူနေပါတယ်။"]
+                    ai_responses = [
+                        "ဗျူဟာမြောက် လမ်းကြောင်း ဖွင့်ပေးထားပါတယ် ဆရာကြီး။", 
+                        "Wuthering Waves အတွက် Intro/Outro Combo တိုက်ကွက် စတင်နိုင်ပါပြီ။", 
+                        "ဂိမ်းမှတ်တမ်းကို စနစ်ထဲမှာ ဗီဒီယို လုံခြုံစွာ ဖမ်းယူနေပါတယ်။"
+                    ]
                     st.session_state.chat_history.append({"user": "Akira AI", "text": f"*`{random.choice(ai_responses)}`*"})
                     st.rerun()
 
     with col_right:
         st.subheader("📝 မှတ်တမ်းနှင့် အခြေအနေ")
         st.markdown("**📊 စစ်ဆက်တန်း / ဂိမ်းအခြေအနေ:**")
-        st.code("🕒 Time: 12:45\n⚔️ Score: 3-1\n📈 Status: Winning", language="markdown")
+        st.code("🕒 Time: 10:51\n⚔️ Level: 20\n📈 Status: 夜帰の駐屯地に向かう (Wuthering Waves Act Active)", language="markdown")
         st.markdown("---")
         st.markdown("**📝 မှတ်တမ်းမေးမြန်းခြင်း / Notes:**")
         st.text_area("Notes log", placeholder="ဂိမ်းအတွင်း သတိပြုမိသည်များကို ရေးမှတ်ရန်...", label_visibility="collapsed", key="p2_notes")
         st.markdown("---")
         st.markdown("**📋 ပြီးခဲ့သော မှတ်တမ်းအကျဉ်း (History):**")
         st.markdown("- 🔴 Recording Started (00:01)")
+        st.markdown("- ⚔️ 中枢エネルギーコア×3 Acquired")
 
     st.write("---")
     if st.button("⬅️ ပထမစာမျက်နှာသို့ ပြန်သွားရန်", use_container_width=True):
